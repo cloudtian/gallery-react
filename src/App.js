@@ -46,10 +46,40 @@ class App extends Component {
         //     left: 0,
         //     top: 0
         //   },
-        //  rotate: 0
+        //  rotate: 0,
+        //  isInverse: false 表示图片正反面
+        //  isCenter: false 图片是否居中
         // }
       ]  
     };
+  }
+
+  /**
+   * 翻转图片
+   * @param index 输入当前被执行inverse操作的图片对应的图片信息数组的index值
+   * @return {Function} 这是一个闭包函数，其内return一个真正待被执行的函数
+   */
+  inverse (index) {
+    return function () {
+      let imgsArrangeArr = this.state.imgsArrangeArr;
+
+      imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+
+      this.setState({
+        imgsArrangeArr: imgsArrangeArr
+      });
+    }.bind(this);
+  }
+
+  /**
+   * 利用rearrange函数，居中对应index的图片
+   * @param index，需要被居中的图片对应的图片信息数组的index值
+   * @return {Function}
+   */
+  center (index) {
+    return function () {
+      this.rearrange(index);
+    }.bind(this);
   }
 
   // 组件加载后为每张图片计算其位置的范围
@@ -117,7 +147,8 @@ class App extends Component {
     // 首先居中 centerIndex的图片, 居中的centerIndex图片不需要旋转
     imgsArrangeCenterArr[0] = {
       pos: centerPos,
-      rotate: 0
+      rotate: 0,
+      isCenter: true
     };
 
     // 取出要布局上侧的图片的状态信息
@@ -131,7 +162,8 @@ class App extends Component {
           top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
           left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
         },
-        rotate: get30DegRandom()
+        rotate: get30DegRandom(),
+        isCenter: false
       }
     });
 
@@ -144,7 +176,8 @@ class App extends Component {
           top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
           left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
         },
-        rotate: get30DegRandom()
+        rotate: get30DegRandom(),
+        isCenter: false
       };
     }
 
@@ -172,14 +205,18 @@ class App extends Component {
             left: 0,
             top: 0
           },
-          rotate: 0
+          rotate: 0,
+          isInverse: false,
+          isCenter: false
         };
       }
 
       imgFigures.push(
        <ImgFigure data={value}
         ref={'imgFigure' + index} 
-        arrange={this.state.imgsArrangeArr[index]}/>
+        arrange={this.state.imgsArrangeArr[index]} 
+        inverse={this.inverse(index)} 
+        center={this.center(index)}/>
       );
     });
 

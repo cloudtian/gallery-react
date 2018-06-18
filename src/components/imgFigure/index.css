@@ -6,14 +6,37 @@
     background-color: #fff;
     box-sizing: border-box;
     position: absolute;
+
+    transform-style: preserve-3d; 
+    cursor: pointer;
 }
 
 .img-bottom {
     text-align: center;
 }
 
-.img-title {
+.img-title, 
+.img-back {
     margin: 20px 0 0 0;
     color: #a7a0a2;
     font-size: 16px;
+}
+
+.img-back {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.img-figure.is-inverse img,
+.img-figure.is-inverse .img-title {
+    display: none;
+}
+.img-figure.is-inverse .img-back {
+    display: block;
 }
