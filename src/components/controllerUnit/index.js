@@ -10,13 +10,23 @@ class ControllerUnit extends React.Component {
 
     handleClick (e) {
 
+        if (this.props.arrange.isCenter) {
+            this.props.inverse();
+        } else {
+            this.props.center();
+        }
         e.stopPropagation();
         e.preventDefault();
     }
 
     render () {
+
+        let className = 'controller-unit';
+        className += this.props.arrange.isCenter ? ' is-center' : '';
+        className += this.props.arrange.isInverse ? ' is-inverse' : '';
+
         return (
-            <span className="controller-unit" onClick={this.handleClick}>
+            <span className={className} onClick={this.handleClick}>
             </span>
         );
     }

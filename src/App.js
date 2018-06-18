@@ -140,7 +140,7 @@ class App extends Component {
     let vPosRangeX = vPosRange.x;
 
     let imgsArrangeTopArr = [];
-    let topImgNum = Math.ceil(Math.random() * 2); // 取一个或者不取
+    let topImgNum = Math.floor(Math.random() * 2); // 取一个或者不取
     let topImgSpliceIndex = 0;
 
     let imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1);
@@ -214,6 +214,7 @@ class App extends Component {
 
       imgFigures.push(
        <ImgFigure data={value}
+        key={index}
         ref={'imgFigure' + index} 
         arrange={this.state.imgsArrangeArr[index]} 
         inverse={this.inverse(index)} 
@@ -221,7 +222,11 @@ class App extends Component {
       );
 
       controllerUnits.push(
-        <ControllerUnit />
+        <ControllerUnit 
+        key={index}
+        arrange={this.state.imgsArrangeArr[index]} 
+        inverse={this.inverse(index)} 
+        center={this.center(index)}/>
       )
     });
 
