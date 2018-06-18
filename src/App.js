@@ -9,6 +9,11 @@ function getRangeRandom(low, high) {
   return Math.ceil(Math.random() * (high - low) + low);
 }
 
+// 获取0-30度之间的 一个任意正负值
+function get30DegRandom() {
+  return (Math.random() > 0.5 ? '' : '-') + Math.ceil(Math.random() * 30);
+}
+
 class App extends Component {
 
   constructor (props) {
@@ -40,7 +45,8 @@ class App extends Component {
         //   pos: {
         //     left: 0,
         //     top: 0
-        //   }
+        //   },
+        //  rotate: 0
         // }
       ]  
     };
@@ -108,8 +114,11 @@ class App extends Component {
 
     let imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1);
 
-    // 首先居中 centerIndex的图片
-    imgsArrangeCenterArr[0].pos = centerPos;
+    // 首先居中 centerIndex的图片, 居中的centerIndex图片不需要旋转
+    imgsArrangeCenterArr[0] = {
+      pos: centerPos,
+      rotate: 0
+    };
 
     // 取出要布局上侧的图片的状态信息
     topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum));
@@ -117,9 +126,12 @@ class App extends Component {
 
     // 布局位于上侧的图片
     imgsArrangeTopArr.forEach((value, index) => {
-      imgsArrangeTopArr[index].pos = {
-        top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
-        left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+      imgsArrangeTopArr[index] = {
+        pos: {
+          top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
+          left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+        },
+        rotate: get30DegRandom()
       }
     });
 
@@ -127,9 +139,12 @@ class App extends Component {
     for (let i = 0, j = imgsArrangeArr.length, k = j/2; i < j; i++) {
       let hPosRangeLORX = i < k ? hPosRangeLeftSecX : hPosRangeRightSecX;
 
-      imgsArrangeArr[i].pos = {
-        top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
-        left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
+      imgsArrangeArr[i] = {
+        pos: {
+          top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
+          left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
+        },
+        rotate: get30DegRandom()
       };
     }
 
@@ -153,8 +168,11 @@ class App extends Component {
       
       if (!this.state.imgsArrangeArr[index]) {
         this.state.imgsArrangeArr[index] = {
-          left: 0,
-          top: 0
+          pos: {
+            left: 0,
+            top: 0
+          },
+          rotate: 0
         };
       }
 
