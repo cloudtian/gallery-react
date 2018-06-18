@@ -3,6 +3,7 @@ import {findDOMNode} from 'react-dom';
 import './App.css';
 import imgData from './data/imgData';
 import ImgFigure from './components/imgFigure/index';
+import ControllerUnit from './components/controllerUnit/index';
 
 // 获取区间内的一个随机数
 function getRangeRandom(low, high) {
@@ -218,6 +219,10 @@ class App extends Component {
         inverse={this.inverse(index)} 
         center={this.center(index)}/>
       );
+
+      controllerUnits.push(
+        <ControllerUnit />
+      )
     });
 
     return (
