@@ -27,7 +27,6 @@
 }
 
 .img-back {
-    display: none;
     position: absolute;
     left: 0;
     top: 0;
@@ -47,14 +46,7 @@
     transform: rotateY(180deg) translateZ(1px);
     backface-visibility: hidden;
 }
+
 .img-back p {
     margin: 0;
-}
-
-.img-figure.is-inverse img,
-.img-figure.is-inverse .img-title {
-    display: none;
-}
-.img-figure.is-inverse .img-back {
-    display: block;
 }
